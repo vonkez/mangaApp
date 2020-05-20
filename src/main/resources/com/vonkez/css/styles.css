@@ -1,0 +1,303 @@
+.root {
+    -fx-font-family: "Roboto";
+    -fx-font-smoothing-type: gray;
+
+    -fx-decorator-color: derive(#5264AE, -50%);
+    surface-color: #dcddde;
+    bg-color: #36393f;
+    bg-selected-color: #32353b;
+    metadata-bg-color: #18191c;
+    fc-color: #202225;
+    sc-color: #2f3136;
+    icon-color: #dcddde;
+    text-test-color: #f9f6f9;
+    another-text-color: #ebebeb;
+
+}
+.jfx-button .ikonli-font-icon {
+    -fx-icon-color: icon-color;
+}
+
+/* Main content hbox  */
+.main-stack-pane {
+    -fx-background-color: bg-color;
+    /*-fx-border-width: 2*/
+    }
+
+.main-stack-pane .jfx-button {
+
+}
+
+/* first VBox */
+.first-vbox {
+    -fx-background-color: fc-color;
+}
+
+/* second VBox */
+.second-vbox {
+    -fx-background-color: sc-color;
+    //-fx-margin: 20, 50, 100, 150;
+}
+.second-vbox .label {
+     -fx-text-fill: text-test-color;
+     -fx-font-size: 18;
+}
+.second-vbox .list-view .jfx-button {
+     -fx-text-fill: text-test-color;
+     -fx-background-color: sc-color;
+}
+.second-vbox .list-view {
+  -fx-padding: 0;
+  -fx-background-insets: 0 0 0 0;
+  -fx-border-insets: 0;
+  -fx-background-color: red;
+
+}
+.second-vbox .list-view .clipped-container {
+
+  -fx-background-color: blue;
+  -fx-background-insets: 0 0 0 0;
+  -fx-border-insets: 0;
+  -fx-padding: 0;
+}
+.second-vbox .list-cell {
+  -fx-background-color: sc-color;
+  -fx-background-insets: 0 0 0 0;
+  -fx-border-insets: 0;
+  -fx-padding: 0;
+}
+
+
+/* third column (content pane)*/
+.content-pane {
+     -fx-background-color:bg-color;
+
+}
+/* Scroll pane */
+.scroll-pane {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-background-color: blue;
+}
+
+.scroll-pane .viewport {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-background-color: bg-color;
+}
+
+
+/* Manga info */
+
+
+.manga-info-vbox {
+    -fx-background-color: bg-color;
+}
+
+/* MangaInfo metadata*/
+
+.metadata-hbox {
+     -fx-background-color: metadata-bg-color;
+ }
+
+/* Thumbnail */
+.manga-thumbnail-wrapper{
+    -fx-padding: 15;
+}
+/* Text part */
+.metadata-text-vbox {
+    -fx-spacing: 10px;
+}
+
+.manga-title {
+    -fx-font-size: 26;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.metadata-key {
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.metadata-value {
+    -fx-font-size: 18;
+    -fx-text-fill: #c4c4c4;
+    -fx-font-weight: lighter;
+}
+/* Desc + Buttons*/
+.metadata-desc-vbox{
+    -fx-spacing: 15;
+}
+.button-hbox {
+    -fx-spacing: 25;
+}
+.icon-button {
+    -fx-pref-width: 50px;
+    -fx-background-radius: 50px;
+    -fx-pref-height: 50px;
+}
+.icon-button .jfx-rippler {
+    -jfx-rippler-fill: rgba(255.0, 255.0, 255.0, 0.29885056614875793);
+}
+.icon-button .ikonli-font-icon  {
+    -fx-icon-color: icon-color;
+}
+
+/* Chapter list*/
+.chapter-list {
+    -fx-background-color: red;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-padding: 0;
+}
+
+.chapter-list .clipped-container {
+  -fx-padding: 0;
+  -fx-background-insets: 0 0 0 0;
+  -fx-border-insets: 0;
+  -fx-background-color: purple;
+}
+
+.chapter-list .list-cell {
+    -fx-background-color: bg-selected-color;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-insets: 0;
+    -fx-padding: 0;
+}
+
+.chapter-cell {
+    -fx-background-color: bg-selected-color;
+    -fx-text-fill: another-text-color;
+    -fx-padding: 0 0 0 15;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-insets: 0;
+}
+
+/* Search list*/
+/* more on SearchResultCell */
+.search-list {
+    -fx-background-color: red;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-padding: 0;
+}
+
+.search-list .clipped-container {
+  -fx-padding: 0;
+  -fx-background-insets: 0 0 0 0;
+  -fx-border-insets: 0;
+  -fx-background-color: purple;
+}
+
+.search-list .list-cell {
+    -fx-background-color: bg-color;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-insets: 0;
+    -fx-padding: 50;
+}
+
+
+
+/* Decorator*/
+.jfx-decorator {
+}
+
+.jfx-decorator .jfx-decorator-buttons-container {
+    -fx-background-color: fc-color;
+}
+
+.jfx-decorator .resize-border {
+    -fx-border-color: fc-color;
+    -fx-border-width: 0 4 4 4;
+}
+
+.jfx-decorator .jfx-decorator-title-container .jfx-decorator-text {
+    -fx-fill: WHITE;
+    -fx-font-size: 16;
+}
+
+.jfx-decorator .jfx-decorator-title-container .ikonli-font-icon {
+    -fx-icon-size: 15;
+    -fx-icon-color: WHITE;
+}
+
+/* Spinners */
+.standart-spinner .arc {
+    -fx-stroke: #4285f4;
+}
+
+.standart-spinner .track {
+    -fx-stroke: #d0d0d0;
+}
+
+/* Scroll bar */
+.scroll-bar {
+    -fx-background-color: bg-color;
+    -fx-background-insets: 0 0 0 0;
+    -fx-padding: 0, 0, 0, 0;
+    -fx-background-radius: 0;
+}
+
+.track {
+    -fx-background-color: bg-color;
+    -fx-background-insets: 0 0 0 0;
+    -fx-padding: 0, 0, 0, 0;
+    -fx-background-radius: 0;
+
+}
+
+.increment-button , .decrement-button{
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-shape: null;
+}
+.increment-arrow , .decrement-arrow {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-shape: null;
+}
+
+.thumb {
+    -fx-background-radius: 3;
+    -fx-background-color: rgba(117, 142, 250, 0.6);
+}
+
+
+/* extensions */
+.extensions {
+    -fx-padding: 15;
+}
+
+.extensions .label {
+    -fx-border-style: solid;
+    -fx-border-width: 3;
+    -fx-border-color: white;
+    -fx-background-insets: 15;
+    -fx-background-insets: 15;
+    -fx-text-fill: white;
+    -fx-font-size: 45;
+}
+/* settings */
+.settings {
+    -fx-padding: 15;
+}
+
+.settings .label {
+    -fx-border-style: solid;
+    -fx-border-width: 3;
+    -fx-border-color: white;
+    -fx-background-insets: 15;
+    -fx-background-insets: 15;
+    -fx-text-fill: white;
+    -fx-font-size: 45;
+}
+
+
+
+

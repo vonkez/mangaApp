@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<StackPane maxHeight="9999" maxWidth="9999"  xmlns="http://javafx.com/javafx/10.0.2-internal"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vonkez.controllers.ReaderController"
+           styleClass="reader">
+    <children>
+        <Label text="Reader" maxWidth="Infinity" maxHeight="Infinity" alignment="CENTER"/>
+    </children>
+</StackPane>

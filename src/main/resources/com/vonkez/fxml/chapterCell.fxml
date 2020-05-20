@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import com.jfoenix.controls.JFXButton?>
+
+
+<JFXButton xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.vonkez.controllers.ChapterCellController"
+           prefHeight="35.0" prefWidth="6600.0"
+           styleClass="chapter-cell"
+           fx:id="button"
+           alignment="CENTER_LEFT"
+           text="Zop">
+
+</JFXButton>

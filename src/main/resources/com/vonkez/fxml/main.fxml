@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.shape.Circle?>
+<StackPane pickOnBounds="false" fx:id="mainStackpane"
+           styleClass="main-stack-pane"
+           maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+           prefHeight="700.0" prefWidth="1200.0"
+           xmlns="http://javafx.com/javafx/10.0.2-internal"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.vonkez.controllers.MainController" >
+    <children>
+
+        <GridPane fx:id="mainGrid" styleClass="main-grid">
+            <VBox fx:id="firstColumn" styleClass="first-vbox" minWidth="60" alignment="TOP_RIGHT" GridPane.columnIndex="0">
+                <JFXButton fx:id="libraryButton" minHeight="60" >
+                    <graphic>
+                        <FontIcon iconLiteral="ion4-md-bookmarks:44"/>
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="updatesButton" minHeight="60" >
+                    <graphic>
+                        <FontIcon iconLiteral="ion4-md-infinite:44"/>
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="spaceButton" prefHeight="10000">
+
+                </JFXButton>
+                <JFXButton fx:id="settinsButton" minHeight="60">
+                    <graphic>
+                        <FontIcon iconLiteral="ion4-md-settings:44"/>
+                    </graphic>
+                </JFXButton>
+            </VBox>
+            <VBox fx:id="secondColumn" styleClass="second-vbox" minWidth="240" maxWidth="240" alignment="CENTER" GridPane.columnIndex="1">
+                <Label text="Library"/>
+                <ListView fx:id="libraryListView" prefHeight="10000">
+                </ListView>
+            </VBox>
+            <StackPane fx:id="contentPane" styleClass="content-pane" prefWidth="10000" prefHeight="10000" GridPane.columnIndex="2">
+
+            </StackPane>
+        </GridPane>
+    </children>
+</StackPane>

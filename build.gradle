@@ -1,0 +1,50 @@
+plugins {
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'org.beryx.jlink' version '2.19.0'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.jsoup:jsoup:1.13.1'
+    compile 'org.kordamp.ikonli:ikonli-javafx:11.5.0'
+    compile 'org.kordamp.ikonli:ikonli-ionicons4-pack:11.5.0'
+    compile 'com.squareup.okhttp3:okhttp:4.6.0'
+    compile 'com.jfoenix:jfoenix:9.0.9'
+    compile 'io.reactivex.rxjava2:rxjava:2.2.19'
+    compile 'io.reactivex.rxjava2:rxjavafx:2.2.2'
+    compile('org.controlsfx:controlsfx:11.0.1') {
+        exclude group: 'org.openjfx'
+    }
+}
+
+application{
+    applicationDefaultJvmArgs = [
+            "--add-exports=javafx.graphics/com.sun.javafx.scene=com.jfoenix",
+            "--add-exports=javafx.graphics/com.sun.javafx.scene.text=com.jfoenix",
+            "--add-exports=javafx.graphics/com.sun.javafx.geom=com.jfoenix",
+            "--add-exports=javafx.graphics/com.sun.javafx.stage=com.jfoenix",
+            "--add-exports=javafx.graphics/com.sun.javafx.util=com.jfoenix",
+            "--add-exports=javafx.graphics/com.sun.javafx.scene.traversal=com.jfoenix",
+    ]
+}
+
+
+javafx {
+    version = "14"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+jlink {
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    launcher {
+        name = 'mangaApp'
+    }
+    addExtraDependencies("javafx")
+
+}
+
+mainClassName = "$moduleName/com.vonkez.Main"

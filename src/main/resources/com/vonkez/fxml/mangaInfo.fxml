@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXSpinner?>
+<StackPane maxHeight="9999" maxWidth="9999" xmlns="http://javafx.com/javafx/10.0.2-internal"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vonkez.controllers.MangaInfoController"
+           styleClass="manga-info" fx:id="root" prefHeight="9999" >
+    <children>
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="9999"  maxHeight="9999">
+            <VBox fx:id="wrapper" styleClass="manga-info-vbox" prefWidth="9999"  >
+                <HBox styleClass="metadata-hbox" minHeight="300" maxHeight="300">
+                    <!-- Thumbnail -->
+                    <BorderPane fx:id="thumbnailWrapper" styleClass="manga-thumbnail-wrapper" minWidth="270">
+                        <center>
+                            <JFXSpinner styleClass="standart-spinner" startingAngle="0" radius="25" />
+                            <!-- <ImageView fx:id="thumbnail" styleClass="manga-thumbnail"/> -->
+                        </center>
+                    </BorderPane>
+                    <!-- Metada -->
+                    <VBox styleClass="metadata-text-vbox" fx:id="metadataTextVbox" minWidth="250">
+                        <HBox>
+                            <Label wrapText="true" fx:id="title" text="TITLE" styleClass="manga-title"/>
+                        </HBox>
+                        <HBox>
+                            <Label text="Author  " styleClass="metadata-key"/>
+                            <Label fx:id="author" text="Makarna" styleClass="metadata-value"/>
+                        </HBox>
+                        <HBox>
+                            <Label text="Artist  " styleClass="metadata-key"/>
+                            <Label fx:id="artist" text="Makarna" styleClass="metadata-value"/>
+                        </HBox>
+                        <HBox>
+                            <Label text="Last Chapter  " styleClass="metadata-key"/>
+                            <Label fx:id="lastChapter" text="Makarna" styleClass="metadata-value"/>
+                        </HBox>
+                        <HBox>
+                            <Label text="Update  " styleClass="metadata-key"/>
+                            <Label fx:id="update" text="Makarna" styleClass="metadata-value"/>
+                        </HBox>
+                        <HBox>
+                            <Label text="Source  " styleClass="metadata-key"/>
+                            <Label fx:id="source" text="Makarna" styleClass="metadata-value"/>
+                        </HBox>
+                        <HBox>
+                            <Label text="Status  " styleClass="metadata-key"/>
+                            <Label fx:id="status" text="Makarna" styleClass="metadata-value"/>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Desc+Buttons -->
+                    <VBox fx:id="metadataDescVbox" styleClass="metadata-desc-vbox">
+                        <Label text="Description" styleClass="metadata-key"/>
+                        <Label fx:id="descripton" wrapText="true" styleClass="metadata-value">"Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                            dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                            fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                            proident, sunt in culpa qui officia deserunt mollit anim id est
+                            laborum."</Label>
+                        <!-- Spacing -->
+                        <HBox fx:id="spacer1"/>
+                        <HBox fx:id="buttonHbox" styleClass="button-hbox" minHeight="50">
+                            <JFXButton styleClass="icon-button" pickOnBounds="false">
+                                <graphic>
+                                    <FontIcon iconLiteral="ion4-md-bookmark:44"/>
+                                </graphic>
+                            </JFXButton>
+                            <JFXButton styleClass="icon-button" pickOnBounds="false">
+                                <graphic>
+                                    <FontIcon iconLiteral="ion4-md-swap:44"/>
+                                </graphic>
+                            </JFXButton>
+                            <JFXButton styleClass="icon-button" pickOnBounds="false">
+                                <graphic>
+                                    <FontIcon iconLiteral="ion4-md-arrow-dropdown:44"/>
+                                </graphic>
+                            </JFXButton>
+                        </HBox>
+                    </VBox>
+                </HBox>
+                <!-- Chapter list -->
+                <ListView fx:id="chapterList" styleClass="chapter-list" prefWidth="9999" >
+
+                </ListView>
+            </VBox>
+        </ScrollPane>
+    </children>
+</StackPane>
