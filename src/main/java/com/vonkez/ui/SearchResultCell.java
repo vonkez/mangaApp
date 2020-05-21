@@ -15,7 +15,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-public class SearchResultCell extends ListCell<Observable<MangasPage>> {
+public class SearchResultCell extends ListCell<MangasPage> {
     VBox mainContainer;
     FlowPane mangaContainer;
     Label containerName;
@@ -46,7 +46,7 @@ public class SearchResultCell extends ListCell<Observable<MangasPage>> {
     }
 
     @Override
-    protected void updateItem(Observable<MangasPage> item, boolean empty) {
+    protected void updateItem(MangasPage item, boolean empty) {
         super.updateItem(item, empty);
         mangaContainer.getChildren().clear();
         if (item == null){
@@ -58,19 +58,17 @@ public class SearchResultCell extends ListCell<Observable<MangasPage>> {
             if(getGraphic() == null)
                 setGraphic(mainContainer);
             String name;
-            item.compose(FxObservableTransformers.doOnNextFx(mangasPage -> {
-                    containerName.setText(mangasPage.sourceName);
-                }))
+            containerName.setText(item.sourceName);
+            Observable.just(item)
                 .flatMap(mangasPage -> {
-                    // turn mangas to buttons
                     return Observable.fromIterable(mangasPage.mangas)
                             .map(manga -> {
-                                var image = manga.source.fetchImage(manga.thumbnailUrl);
-                                var mangaButton = new JFXButton();
-                                mangaButton.setStyle("-fx-background-radius: 0;");
-                                mangaButton.setGraphic(new ImageView(image));
-                                mangaButton.setOnAction(event -> {
-                                    NavigationManager.navigate(manga);
+                                    var image = manga.source.fetchImage(manga.thumbnailUrl);
+                                    var mangaButton = new JFXButton();
+                                    mangaButton.setStyle("-fx-background-radius: 0;");
+                                    mangaButton.setGraphic(new ImageView(image));
+                                    mangaButton.setOnAction(event -> {
+                                        NavigationManager.navigate(manga);
                                 });
                                 return mangaButton;
                             });

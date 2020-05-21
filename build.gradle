@@ -6,6 +6,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -16,6 +17,7 @@ dependencies {
     compile 'com.jfoenix:jfoenix:9.0.9'
     compile 'io.reactivex.rxjava2:rxjava:2.2.19'
     compile 'io.reactivex.rxjava2:rxjavafx:2.2.2'
+    compile 'org.xerial:sqlite-jdbc:3.31.1'
     compile('org.controlsfx:controlsfx:11.0.1') {
         exclude group: 'org.openjfx'
     }
@@ -28,10 +30,9 @@ application{
             "--add-exports=javafx.graphics/com.sun.javafx.geom=com.jfoenix",
             "--add-exports=javafx.graphics/com.sun.javafx.stage=com.jfoenix",
             "--add-exports=javafx.graphics/com.sun.javafx.util=com.jfoenix",
-            "--add-exports=javafx.graphics/com.sun.javafx.scene.traversal=com.jfoenix",
+            "--add-exports=javafx.graphics/com.sun.javafx.scene.traversal=com.jfoenix"
     ]
 }
-
 
 javafx {
     version = "14"

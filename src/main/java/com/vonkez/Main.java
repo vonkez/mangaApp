@@ -15,7 +15,6 @@ import java.io.IOException;
 
 import static org.kordamp.ikonli.ionicons4.Ionicons4Material.SETTINGS;
 
-
 public class Main extends Application {
     public static void main(String[] args) throws IOException {
         launch();
@@ -25,10 +24,10 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         SourceManager.initialize();
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
+
         Parent mainNode = FXMLLoader.load(getClass().getResource("fxml/main.fxml"));
         JFXDecorator decorator = new JFXDecorator(stage, mainNode);
         decorator.setGraphic(new FontIcon(SETTINGS));
-
 
 
         Scene scene = new Scene(decorator);
@@ -37,7 +36,7 @@ public class Main extends Application {
 //            System.out.println(event.getText());
 //            event.consume();
 //        });
-        //scene.setOnKeyPressed(event -> System.out.println(event.getText()));
+//      scene.setOnKeyPressed(event -> System.out.println(event.getText()));
         final ObservableList<String> stylesheets = scene.getStylesheets();
         stylesheets.addAll(JFoenixResources.load("css/jfoenix-fonts.css").toExternalForm(),
                            JFoenixResources.load("css/jfoenix-design.css").toExternalForm(),

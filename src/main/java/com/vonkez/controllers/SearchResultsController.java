@@ -4,6 +4,9 @@ import com.vonkez.model.MangasPage;
 import com.vonkez.source.SourceManager;
 import com.vonkez.ui.SearchResultCell;
 import io.reactivex.Observable;
+import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
+import io.reactivex.schedulers.Schedulers;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,23 +26,32 @@ public class SearchResultsController implements Initializable, BaseController {
     public void initData(Object data) {
         String query = (String) data;
         long startTime = Instant.now().toEpochMilli();
-        ObservableList<Observable<MangasPage>> searchResults = SourceManager.sourceSearch(query);
-        long endTime = Instant.now().toEpochMilli();
-        System.out.println("sourceSearch  time in milliseconds: " + (endTime - startTime));
+
+        ObservableList searchResults = FXCollections.observableArrayList();
+        SourceManager.getSources().forEach(mangaSource -> {
+            Observable.just(1)
+                    .subscribeOn(Schedulers.io())
+                    .map(integer -> mangaSource.fetchSearchManga(1, query))
+                    .observeOn(JavaFxScheduler.platform())
+                    .subscribe(mangasPage -> searchResults.add(mangasPage));
+        });
+        System.out.println("sourceSearch observable time in milliseconds: " + (Instant.now().toEpochMilli() - startTime));
+
+
+
 
         long startTime2 = Instant.now().toEpochMilli();
 
         mainList.setItems(searchResults);
-        long endTime2 = Instant.now().toEpochMilli();
-        System.out.println("list set items  time in milliseconds: " + (endTime2 - startTime2));
 
+        System.out.println("list set items  time in milliseconds: " + (Instant.now().toEpochMilli() - startTime2));
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mainList.setCellFactory(new Callback<ListView<Observable<MangasPage>>, ListCell<Observable<MangasPage>>>() {
+        mainList.setCellFactory(new Callback<ListView<MangasPage>, ListCell<MangasPage>>() {
             @Override
-            public ListCell<Observable<MangasPage>> call(ListView<Observable<MangasPage>> param) {
+            public ListCell<MangasPage> call(ListView<MangasPage> param) {
                 return new SearchResultCell();
             }
         });

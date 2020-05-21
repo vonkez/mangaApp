@@ -25,8 +25,7 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
-    @FXML
-    private StackPane mainStackpane;
+
     @FXML
     private StackPane contentPane;
     @FXML
@@ -35,24 +34,9 @@ public class MainController implements Initializable {
     private VBox secondColumn;
     @FXML
     private GridPane mainGrid;
-    // Menu buttons
-
-
-    @FXML
-    private JFXButton libraryButton;
-
-    @FXML
-    private JFXButton settingsButton;
-    @FXML
-    private JFXButton narutoButton;
-    @FXML
-    private Button pdButton;
     @FXML
     private ListView libraryListView;
-    @FXML
-    private Button spaceButton;
-    @FXML
-    private GridPane drawerPane;
+
 
 
     @Override

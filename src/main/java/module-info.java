@@ -13,6 +13,7 @@ module mangaApp {
     requires rxjavafx;
     requires okhttp3;
     requires org.jsoup;
+    requires java.sql;
 
     opens com.vonkez to javafx.fxml;
     opens com.vonkez.controllers to javafx.fxml;
