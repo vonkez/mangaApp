@@ -10,7 +10,7 @@
            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vonkez.controllers.MangaInfoController"
            styleClass="manga-info" fx:id="root" prefHeight="9999" >
     <children>
-        <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="9999"  maxHeight="9999">
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="9999"  maxHeight="9999" visible="false" managed="false">
             <VBox fx:id="wrapper" styleClass="manga-info-vbox" prefWidth="9999"  >
                 <HBox styleClass="metadata-hbox" minHeight="300" maxHeight="300">
                     <!-- Thumbnail -->
@@ -65,21 +65,22 @@
                         <!-- Spacing -->
                         <HBox fx:id="spacer1"/>
                         <HBox fx:id="buttonHbox" styleClass="button-hbox" minHeight="50">
-                            <JFXButton styleClass="icon-button" pickOnBounds="false">
+                            <ToggleButton fx:id="button1" styleClass="icon-button">
+
                                 <graphic>
-                                    <FontIcon iconLiteral="ion4-md-bookmark:44"/>
+                                    <FontIcon iconLiteral="ion4-md-bookmark:40"/>
                                 </graphic>
-                            </JFXButton>
-                            <JFXButton styleClass="icon-button" pickOnBounds="false">
+                            </ToggleButton>
+                            <ToggleButton fx:id="button2" styleClass="icon-button">
                                 <graphic>
-                                    <FontIcon iconLiteral="ion4-md-swap:44"/>
+                                    <FontIcon iconLiteral="ion4-md-swap:40"/>
                                 </graphic>
-                            </JFXButton>
-                            <JFXButton styleClass="icon-button" pickOnBounds="false">
+                            </ToggleButton>
+                            <ToggleButton fx:id="button3" styleClass="icon-button">
                                 <graphic>
-                                    <FontIcon iconLiteral="ion4-md-arrow-dropdown:44"/>
+                                    <FontIcon iconLiteral="ion4-md-arrow-dropdown:40"/>
                                 </graphic>
-                            </JFXButton>
+                            </ToggleButton>
                         </HBox>
                     </VBox>
                 </HBox>
@@ -89,5 +90,6 @@
                 </ListView>
             </VBox>
         </ScrollPane>
+        <JFXSpinner fx:id="pageSpinner" styleClass="standart-spinner" startingAngle="0" radius="80" />
     </children>
 </StackPane>

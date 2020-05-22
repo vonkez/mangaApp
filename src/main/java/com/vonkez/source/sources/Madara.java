@@ -48,30 +48,17 @@ public class Madara extends MangaSource {
     public String popularMangaSelector(){ return "div.page-item-detail"; }
     public String popularMangaNextPageSelector(){ return "body:not(:has(.no-posts))"; }
 
-    public Request sourceThumbnailRequests(){
-        return new Requests.GET("http://localhost:8080/9MQ0.png")
-                .build();
-    }
+
     public Request imageRequest(String url){
         return new Requests.GET(url)
                 .build();
     }
 
-    public Image fetchSourceThumbnail() throws IOException {
-        try (Response response = client.newCall(sourceThumbnailRequests()).execute()) {
-            if (!response.isSuccessful()) System.out.println("Request failed: " + response);
-            return new Image(response.body().byteStream());
-        }
-        catch (IOException e){
-            System.out.println("Request failed: fetch image");
-            e.printStackTrace();
-        }
-        return null;
-    }
-    public Image fetchImage(String url) {
+
+    public byte[] fetchImage(String url) {
         try (Response response = client.newCall(imageRequest(url)).execute()) {
             if (!response.isSuccessful()) System.out.println("Request failed: " + response);
-            return new Image(response.body().byteStream());
+            return response.body().byteStream().readAllBytes();
         }
         catch (IOException e){
             System.out.println("Request failed: fetch image"+ url);
@@ -246,7 +233,7 @@ public class Madara extends MangaSource {
                 var genre = element.text();
                 genres.add(genre);
             });
-            manga.genre = genres.stream().collect(Collectors.joining(", "));
+            manga.genre = String.join(", ", genres);
             manga.source = this;
             return manga;
         }

@@ -27,7 +27,7 @@ public class SearchResultsController implements Initializable, BaseController {
         String query = (String) data;
         long startTime = Instant.now().toEpochMilli();
 
-        ObservableList searchResults = FXCollections.observableArrayList();
+        ObservableList<MangasPage> searchResults = FXCollections.observableArrayList();
         SourceManager.getSources().forEach(mangaSource -> {
             Observable.just(1)
                     .subscribeOn(Schedulers.io())

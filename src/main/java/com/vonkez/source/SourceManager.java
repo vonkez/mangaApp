@@ -24,6 +24,7 @@ public class SourceManager {
     }
 
     public static MangaSource getSource(String sourceName){
+        // TODO: NoSuchElementException / .orElse(null)
         MangaSource result = sources.stream()
                 .filter(source -> source.getName().equals(sourceName))
                 .findFirst()

@@ -63,7 +63,7 @@ public class SearchResultCell extends ListCell<MangasPage> {
                 .flatMap(mangasPage -> {
                     return Observable.fromIterable(mangasPage.mangas)
                             .map(manga -> {
-                                    var image = manga.source.fetchImage(manga.thumbnailUrl);
+                                    var image = manga.fetchThumbnail(manga.thumbnailUrl);
                                     var mangaButton = new JFXButton();
                                     mangaButton.setStyle("-fx-background-radius: 0;");
                                     mangaButton.setGraphic(new ImageView(image));

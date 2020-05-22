@@ -1,6 +1,7 @@
 package com.vonkez.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.vonkez.database.MangaDaoSQLite;
 import com.vonkez.model.Manga;
 import com.vonkez.ui.LibraryCell;
 import com.vonkez.ui.LibraryManager;
@@ -38,7 +39,6 @@ public class MainController implements Initializable {
     private ListView libraryListView;
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         NavigationManager.initialize(contentPane);
@@ -59,7 +59,8 @@ public class MainController implements Initializable {
                 return new LibraryCell();
             }
         });
-        libraryListView.setItems(LibraryManager.getLibrary());
+        libraryListView.setItems(LibraryManager.getLibraryMangas());
+
 
 
         /*

@@ -48,8 +48,36 @@ public class Manga {
             return orig;
         }
     }
+
     public InputStream getThumbnailStream(){
         return new ByteArrayInputStream(this.thumbnail.clone());
+    }
+
+    public Image fetchThumbnail(String url) {
+        // TODO: ?
+        if (this.thumbnail == null){
+            this.thumbnail = source.fetchImage(url);
+            return new Image(getThumbnailStream());
+        }
+        else{
+            return new Image(getThumbnailStream());
+        }
+    }
+
+    public void mergeWith(Manga manga){
+        this.id = this.id == 0 ? manga.id: this.id;
+        this.title = this.title == null ? manga.title: this.title;
+        this.url = this.url == null ? manga.url: this.url;
+        this.thumbnailUrl = this.thumbnailUrl == null ? manga.thumbnailUrl: this.thumbnailUrl;
+        this.author = this.author == null ? manga.author: this.author;
+        this.artist = this.artist == null ? manga.artist: this.artist;
+        this.description = this.description == null ? manga.description: this.description;
+        this.status = this.status == null ? manga.status: this.status;
+        this.genre = this.genre == null ? manga.genre: this.genre;
+        this.source = this.source == null ? manga.source: this.source;
+        this.lastChapter = this.lastChapter == 0 ? manga.lastChapter: this.lastChapter;
+        this.lastUpdate = this.lastUpdate == 0 ? manga.lastUpdate: this.lastUpdate;
+        this.thumbnail = this.thumbnail == null ? manga.thumbnail: this.thumbnail;
     }
 
     public enum STATUS {

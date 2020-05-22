@@ -9,10 +9,9 @@ import java.io.IOException;
 import java.util.List;
 
 public abstract class MangaSource{
-     public abstract Image fetchSourceThumbnail() throws IOException;
      public abstract String getName();
      public abstract MangasPage fetchSearchManga(int page, String query);
      public abstract Manga fetchMangaDetails(Manga manga);
-     public abstract Image fetchImage(String url);
+     public abstract byte[] fetchImage(String url);
      public abstract List<Chapter> fetchChapterList(Manga manga);
 }

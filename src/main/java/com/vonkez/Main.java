@@ -2,6 +2,7 @@ package com.vonkez;
 
 import com.jfoenix.assets.JFoenixResources;
 import com.jfoenix.controls.JFXDecorator;
+import com.vonkez.source.MangaSource;
 import com.vonkez.source.SourceManager;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -28,8 +29,6 @@ public class Main extends Application {
         Parent mainNode = FXMLLoader.load(getClass().getResource("fxml/main.fxml"));
         JFXDecorator decorator = new JFXDecorator(stage, mainNode);
         decorator.setGraphic(new FontIcon(SETTINGS));
-
-
         Scene scene = new Scene(decorator);
 //        scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
 //            System.out.println("Key pressed");

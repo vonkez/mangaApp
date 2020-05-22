@@ -50,7 +50,7 @@
   -fx-padding: 0;
   -fx-background-insets: 0 0 0 0;
   -fx-border-insets: 0;
-  -fx-background-color: red;
+  -fx-background-color: sc-color;
 
 }
 .second-vbox .list-view .clipped-container {
@@ -133,16 +133,26 @@
 .button-hbox {
     -fx-spacing: 25;
 }
+
+/* cant use color variables here (bug?)*/
 .icon-button {
     -fx-pref-width: 50px;
-    -fx-background-radius: 50px;
     -fx-pref-height: 50px;
+    -fx-background-radius: 50px;
+    -fx-background-color: null;
 }
-.icon-button .jfx-rippler {
-    -jfx-rippler-fill: rgba(255.0, 255.0, 255.0, 0.29885056614875793);
+.icon-button:selected{
+    -fx-pref-width: 50px;
+    -fx-pref-height: 50px;
+    -fx-background-radius: 50px;
+    -fx-background-color: #dcddde;
 }
+
 .icon-button .ikonli-font-icon  {
-    -fx-icon-color: icon-color;
+    -fx-icon-color: #dcddde;
+}
+.icon-button:selected .ikonli-font-icon  {
+    -fx-icon-color: #18191c;
 }
 
 /* Chapter list*/
@@ -178,7 +188,7 @@
 /* Search list*/
 /* more on SearchResultCell */
 .search-list {
-    -fx-background-color: red;
+    -fx-background-color: bg-color;
     -fx-background-insets: 0;
     -fx-border-insets: 0;
     -fx-padding: 0;

@@ -1,8 +1,12 @@
 package com.vonkez.controllers;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXRippler;
+import com.jfoenix.controls.JFXSpinner;
 import com.vonkez.model.Chapter;
 import com.vonkez.model.Manga;
 import com.vonkez.ui.ChapterListCell;
+import com.vonkez.ui.LibraryManager;
 import io.reactivex.Observable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.schedulers.Schedulers;
@@ -64,7 +68,10 @@ public class MangaInfoController implements Initializable, BaseController {
     private HBox buttonHbox;
     @FXML
     private VBox wrapper;
-
+    @FXML
+    private ToggleButton button1;
+    @FXML
+    private JFXSpinner pageSpinner;
 
     @Override
     public void initData(Object data) {
@@ -74,8 +81,8 @@ public class MangaInfoController implements Initializable, BaseController {
         thumbnail.getStyleClass().add("manga-thumbnail");
 
         long startTime = Instant.now().toEpochMilli();
-
         if(manga.url != null) {
+            // fetch details
             Observable.just(manga)
                     .subscribeOn(Schedulers.io())
                     .map(m -> manga.source.fetchMangaDetails(m))
@@ -89,24 +96,13 @@ public class MangaInfoController implements Initializable, BaseController {
                         source.setText(mangaWithDetails.source.getName());
                         status.setText(mangaWithDetails.status.toString());
                         descripton.setText(mangaWithDetails.description);
-
-
-                        long endTime = Instant.now().toEpochMilli();
-                        System.out.println("mangaInfo after details fetched time in milliseconds: " + (endTime - startTime));
-
-
-                        Observable.just(mangaWithDetails.thumbnailUrl)
-                                .subscribeOn(Schedulers.io())
-                                .map(url -> mangaWithDetails.source.fetchImage(url))
-                                .observeOn(JavaFxScheduler.platform())
-                                .subscribe(image -> {
-                                    thumbnail.setImage(image);
-                                    thumbnailWrapper.setCenter(thumbnail);
-                                    System.out.println("mangaInfo after thumbnail fetched time in milliseconds: " + (endTime - startTime));
-
-                                });
+                        manga.mergeWith(mangaWithDetails);
+                        System.out.println("mangaInfo after details fetched time in milliseconds: " + (Instant.now().toEpochMilli() - startTime));
+                        button1.setSelected(LibraryManager.isInLibrary(manga));
+                        hideLoading();
                     });
 
+            // fetch chapters
             Observable.just(1)
                     .subscribeOn(Schedulers.io())
                     .map(i -> {
@@ -124,7 +120,29 @@ public class MangaInfoController implements Initializable, BaseController {
 
                     });
 
+            // fetch thumbnail
+            Observable.just(manga.thumbnailUrl)
+                    .subscribeOn(Schedulers.io())
+                    .map(url -> manga.fetchThumbnail(url))
+                    .observeOn(JavaFxScheduler.platform())
+                    .subscribe(image -> {
+                        thumbnail.setImage(image);
+                        thumbnailWrapper.setCenter(thumbnail);
+                        System.out.println("mangaInfo after thumbnail fetched time in milliseconds: " + (Instant.now().toEpochMilli() - startTime));
+                    });
         }
+
+        button1.setSelected(LibraryManager.isInLibrary(manga));
+        button1.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue==true) {
+                LibraryManager.addToLibrary(manga);
+            }
+            else {
+                LibraryManager.removeFromLibrary(manga);
+            }
+        });
+        button1.setOnAction(event -> System.out.println(((ToggleButton)event.getSource()).isSelected()));
+
         System.out.println("mangaInfo initdata time in milliseconds: " + (Instant.now().toEpochMilli() - startTime));
 
     }
@@ -149,8 +167,7 @@ public class MangaInfoController implements Initializable, BaseController {
         chapterList.prefHeightProperty().bind(Bindings.size(ls).multiply(35));
         chapterList.setItems(ls);
 
-        // https://lithi.io/file/9MQ0.png
-        // http://localhost:8080/9MQ0.png
+
         VBox.setMargin(chapterList, new Insets(5));
         HBox.setMargin(metadataTextVbox, new Insets(15));
         HBox.setMargin(metadataDescVbox, new Insets(15));
@@ -172,4 +189,18 @@ public class MangaInfoController implements Initializable, BaseController {
         //StackPane.setMargin(button, new Insets(0, 0, 0, 20));
 
     }
+    public void showLoading() {
+        scrollPane.setVisible(false);
+        scrollPane.setManaged(false);
+        pageSpinner.setVisible(true);
+        pageSpinner.setManaged(true);
+    }
+
+    public void hideLoading() {
+        scrollPane.setVisible(true);
+        scrollPane.setManaged(true);
+        pageSpinner.setVisible(false);
+        pageSpinner.setManaged(false);
+    }
+
 }

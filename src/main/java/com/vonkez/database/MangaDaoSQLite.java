@@ -11,7 +11,7 @@ import java.util.List;
 public class MangaDaoSQLite implements MangaDao {
     public static MangaDaoSQLite instance;
     private Connection conn;
-
+    private int highestId;
 
     private MangaDaoSQLite() {
         try {
@@ -35,6 +35,11 @@ public class MangaDaoSQLite implements MangaDao {
                     +"thumbnail blob"
                     +")";
             conn.createStatement().executeUpdate(query);
+
+            for (Manga manga:getAllMangas()) {
+                if (manga.id >highestId)
+                    highestId=manga.id;
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -122,6 +127,7 @@ public class MangaDaoSQLite implements MangaDao {
             stmt.setString(11, manga.thumbnailUrl);
             stmt.setBytes(12, manga.thumbnail == null ? null:  manga.thumbnail.clone());
             stmt.executeUpdate();
+            manga.id = ++highestId;
         } catch (SQLException throwables) {
             System.out.println(throwables.getMessage());
             throwables.printStackTrace();
