@@ -1,82 +1,145 @@
 package com.vonkez.ui;
 
-import com.jfoenix.controls.JFXButton;
-import com.vonkez.model.MangasPage;
+import com.vonkez.model.SourceSearchResult;
 import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
-import io.reactivex.rxjavafx.transformers.FxObservableTransformers;
+import io.reactivex.schedulers.Schedulers;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.*;
 
-public class SearchResultCell extends ListCell<MangasPage> {
-    VBox mainContainer;
-    FlowPane mangaContainer;
-    Label containerName;
+import java.time.Instant;
+
+public class SearchResultCell extends ListCell<SourceSearchResult> {
+    VBox mainVbox;
+    FlowPane mangaFlowPane;
+    Label sourceNameLabel;
     DropShadow dropShadow;
+    Disposable subscription;
+
     public SearchResultCell() {
-        mainContainer = new VBox();
-        mangaContainer = new FlowPane();
-        containerName = new Label();
-        dropShadow = new DropShadow(35, Color.rgb(22,22,22, 0.5));
-
-        containerName.setStyle("-fx-font-size: 50; -fx-text-fill: white;");
-
-
-        mainContainer.setAlignment(Pos.CENTER);
-        mainContainer.setEffect(dropShadow);
-        mainContainer.setStyle("-fx-background-color:  bg-selected-color;");
-
-        mangaContainer.setVgap(10);
-        mangaContainer.setHgap(10);
-        mangaContainer.setPadding(new Insets(15));
-        mangaContainer.setAlignment(Pos.CENTER);
-        mangaContainer.setStyle("-fx-background-color: bg-selected-color;");
+        mainVbox = new VBox();
+        mangaFlowPane = new FlowPane();
+        sourceNameLabel = new Label();
+        //dropShadow = new DropShadow(35, Color.rgb(22,22,22, 0.5));
+        sourceNameLabel.setStyle("-fx-font-size: 45; -fx-text-fill: white;");
 
 
-        VBox.setMargin(containerName, new Insets(15));
+        mainVbox.setAlignment(Pos.CENTER_LEFT);
+        //mainVbox.setEffect(dropShadow);
+        //mainVbox.setStyle("-fx-background-color:  bg-selected-color;");
 
-        mainContainer.getChildren().addAll(containerName, mangaContainer);
+        mangaFlowPane.getStyleClass().add("search-flowpane");
+
+        mangaFlowPane.setVgap(20);
+        mangaFlowPane.setHgap(20);
+        mangaFlowPane.setPadding(new Insets(15,0,15,0));
+        mangaFlowPane.setAlignment(Pos.CENTER_LEFT);
+
+
+        VBox.setMargin(sourceNameLabel, new Insets(15, 0, 15, 0));
+
+        mainVbox.getChildren().addAll(sourceNameLabel, mangaFlowPane);
     }
 
     @Override
-    protected void updateItem(MangasPage item, boolean empty) {
+    protected void updateItem(SourceSearchResult item, boolean empty) {
+        System.out.println("update item" + (empty ? " bos":item.source.getName()));
         super.updateItem(item, empty);
-        mangaContainer.getChildren().clear();
+        mangaFlowPane.getChildren().clear();
+        if (subscription != null)
+            // TODO: cancel requests
+            subscription.dispose();
         if (item == null){
             setGraphic(null);
-            containerName.setText(null);
-            return;
         }
         else{
             if(getGraphic() == null)
-                setGraphic(mainContainer);
-            String name;
-            containerName.setText(item.sourceName);
-            Observable.just(item)
-                .flatMap(mangasPage -> {
-                    return Observable.fromIterable(mangasPage.mangas)
-                            .map(manga -> {
-                                    var image = manga.fetchThumbnail(manga.thumbnailUrl);
-                                    var mangaButton = new JFXButton();
-                                    mangaButton.setStyle("-fx-background-radius: 0;");
-                                    mangaButton.setGraphic(new ImageView(image));
-                                    mangaButton.setOnAction(event -> {
-                                        NavigationManager.navigate(manga);
-                                });
-                                return mangaButton;
+                setGraphic(mainVbox);
+            // change source name
+            sourceNameLabel.setText(item.source.getName());
+
+            long startTime = Instant.now().toEpochMilli();
+
+            subscription = Observable.fromIterable(item.mangas)
+                    .subscribeOn(Schedulers.io())
+                    .map(manga -> {
+                        StackPane singleMangaPane = new StackPane();
+                        var mangaButton = new Button();
+                        var mangaNameLabel = new Label();
+                        var image = manga.fetchThumbnail(manga.thumbnailUrl);
+                        mangaButton.setMaxSize(220, 300);
+                        var imageView = new ImageView(image);
+                        imageView.setFitWidth(220);
+                        imageView.setPreserveRatio(true);
+                        mangaButton.setGraphic(imageView);
+
+
+                        mangaButton.setPadding(new Insets(0));
+                        mangaButton.setBorder(null);
+                        mangaButton.setBackground(null);
+
+                        StackPane.setAlignment(mangaNameLabel, Pos.BOTTOM_CENTER);
+                        mangaNameLabel.getStyleClass().add("search-manga-label");
+                        mangaNameLabel.setPrefWidth(220);
+                        mangaNameLabel.setText(manga.title);
+                        mangaNameLabel.setWrapText(true);
+
+                        mangaButton.setOnAction(event -> {
+                            NavigationManager.navigate(manga);
+                        });
+
+                        singleMangaPane.getChildren().addAll(mangaButton, mangaNameLabel);
+                        return singleMangaPane;
+                    })
+                    .observeOn(JavaFxScheduler.platform())
+                    .subscribe(
+                            singleMangaPane -> mangaFlowPane.getChildren().add(singleMangaPane),
+                            throwable -> {
+                                var label = new Label("ERROR");
+                                label.setStyle("-fx-text-fill: red; -fx-font-size: 20;");
+                                mangaFlowPane.getChildren().add(label);
                             });
-                })
-                .observeOn(JavaFxScheduler.platform())
-                .subscribe(mangaButton -> {
-                    mangaContainer.getChildren().add(mangaButton);
-                });
+
+
+
+//            item.mangas.forEach(manga -> {
+//                StackPane singleMangaPane = new StackPane();
+//                var mangaButton = new Button();
+//                var mangaNameLabel = new Label();
+//
+//                var image = manga.fetchThumbnail(manga.thumbnailUrl);
+//                mangaButton.setMaxSize(220,300);
+//                var imageView = new ImageView(image);
+//                imageView.setFitWidth(220);
+//                imageView.setPreserveRatio(true);
+//                mangaButton.setGraphic(imageView);
+//                mangaButton.setPadding(new Insets(0));
+//                mangaButton.setBorder(null);
+//                mangaButton.setBackground(null);
+//
+//                StackPane.setAlignment(mangaNameLabel, Pos.BOTTOM_CENTER);
+//                mangaNameLabel.getStyleClass().add("search-manga-label");
+//                mangaNameLabel.setPrefWidth(220);
+//                mangaNameLabel.setText(manga.title);
+//                mangaNameLabel.setWrapText(true);
+//                // mangaButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(0), new Insets(0))));
+//
+//                mangaButton.setOnAction(event -> {
+//                    NavigationManager.navigate(manga);
+//                });
+//
+//                singleMangaPane.getChildren().addAll(mangaButton, mangaNameLabel);
+//                mangaFlowPane.getChildren().add(singleMangaPane);
+//
+//            });
+            System.out.println("SearchResult node creation+thumbnail download in milliseconds(" + item.source.getName() +"): " + (Instant.now().toEpochMilli() - startTime));
             }
         }
 

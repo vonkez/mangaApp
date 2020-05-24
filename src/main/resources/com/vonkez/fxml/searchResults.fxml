@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import com.jfoenix.controls.JFXSpinner?>
 <StackPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.vonkez.controllers.SearchResultsController"
-            prefHeight="9999.0" prefWidth="9999.0"
-           style="-fx-background-color: blue;">
-    <ListView styleClass="search-list" fx:id="mainList" >
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.vonkez.controllers.SearchResultsController"
+           prefHeight="9999.0" prefWidth="9999.0">
+    <ListView styleClass="search-list" fx:id="mainList" managed="false" visible="false">
 
     </ListView>
+    <JFXSpinner fx:id="pageSpinner" styleClass="standart-spinner" startingAngle="0" radius="60" />
 </StackPane>

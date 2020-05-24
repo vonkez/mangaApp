@@ -31,6 +31,7 @@ public class LibraryManager {
         }
         return mangas;
     }
+
     public static ObservableList<Manga> getLibraryMangas() {
         return libraryMangas;
     }

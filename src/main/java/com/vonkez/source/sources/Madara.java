@@ -13,6 +13,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.InterruptedIOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,8 +62,10 @@ public class Madara extends MangaSource {
             return response.body().byteStream().readAllBytes();
         }
         catch (IOException e){
-            System.out.println("Request failed: fetch image"+ url);
-            e.printStackTrace();
+            if (!(e instanceof InterruptedIOException)) {
+                System.out.println("Request failed (fetch image): "+ url);
+                e.printStackTrace();
+            }
         }
         return null;
     }

@@ -10,11 +10,13 @@ import com.vonkez.utils.SearchboxManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -37,15 +39,21 @@ public class MainController implements Initializable {
     private GridPane mainGrid;
     @FXML
     private ListView libraryListView;
+    @FXML
+    public Button backButton;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         NavigationManager.initialize(contentPane);
         mainGrid.toFront();
+        StackPane.setAlignment(backButton, Pos.TOP_LEFT);
+        StackPane.setMargin(backButton, new Insets(20));
 
         // Set up library search
         TextField librarySearchBox = TextFields.createClearableTextField();
+        librarySearchBox.getStyleClass().add("library-search-box");
+        librarySearchBox.setPromptText("Search");
         VBox.setMargin(librarySearchBox, new Insets(10));
         secondColumn.getChildren().add(0,librarySearchBox);
         librarySearchBox.setOnAction(event -> {
@@ -61,6 +69,24 @@ public class MainController implements Initializable {
         });
         libraryListView.setItems(LibraryManager.getLibraryMangas());
 
+
+        backButton.setOnAction(event -> {
+            NavigationManager.navigateBack();
+            System.out.println("click");
+        });
+
+        // listen mouse for back button visibility
+        contentPane.addEventFilter(MouseEvent.MOUSE_MOVED, event -> {
+            if (event.getX()<220 && event.getY()<220 && event.getX()>0 && NavigationManager.canNavigateBack()) {
+                backButton.setVisible(true);
+            }
+            else {
+                backButton.setVisible(false);
+            }
+
+//            System.out.println("x: " + event.getX());
+//            System.out.println("y: " + event.getY());
+        });
 
 
         /*

@@ -8,12 +8,11 @@
 <StackPane pickOnBounds="false" fx:id="mainStackpane"
            styleClass="main-stack-pane"
            maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-           prefHeight="700.0" prefWidth="1200.0"
+           prefHeight="750.0" prefWidth="1300.0"
            xmlns="http://javafx.com/javafx/10.0.2-internal"
            xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.vonkez.controllers.MainController" >
     <children>
-
         <GridPane fx:id="mainGrid" styleClass="main-grid">
             <VBox fx:id="firstColumn" styleClass="first-vbox" minWidth="60" alignment="TOP_RIGHT" GridPane.columnIndex="0">
                 <JFXButton fx:id="libraryButton" minHeight="60" >
@@ -41,7 +40,11 @@
                 </ListView>
             </VBox>
             <StackPane fx:id="contentPane" styleClass="content-pane" prefWidth="10000" prefHeight="10000" GridPane.columnIndex="2">
-
+                <Button fx:id="backButton" styleClass="back-button" visible="false" prefWidth="60" prefHeight="60">
+                    <graphic>
+                        <FontIcon iconLiteral="ion4-md-arrow-back:44"/>
+                    </graphic>
+                </Button>
             </StackPane>
         </GridPane>
     </children>

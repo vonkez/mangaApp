@@ -1,7 +1,5 @@
 package com.vonkez.controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXRippler;
 import com.jfoenix.controls.JFXSpinner;
 import com.vonkez.model.Chapter;
 import com.vonkez.model.Manga;
@@ -23,6 +21,7 @@ import javafx.util.Callback;
 
 
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.time.Instant;
 import java.util.ResourceBundle;
 
@@ -72,6 +71,13 @@ public class MangaInfoController implements Initializable, BaseController {
     private ToggleButton button1;
     @FXML
     private JFXSpinner pageSpinner;
+    @FXML
+    private VBox errorPane;
+    @FXML
+    private Label errorTitle;
+    @FXML
+    private Label errorDescription;
+
 
     @Override
     public void initData(Object data) {
@@ -100,7 +106,9 @@ public class MangaInfoController implements Initializable, BaseController {
                         System.out.println("mangaInfo after details fetched time in milliseconds: " + (Instant.now().toEpochMilli() - startTime));
                         button1.setSelected(LibraryManager.isInLibrary(manga));
                         hideLoading();
-                    });
+                    }, throwable -> {
+                        handleError(throwable, "page");
+                    } );
 
             // fetch chapters
             Observable.just(1)
@@ -150,22 +158,24 @@ public class MangaInfoController implements Initializable, BaseController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         long startTime = Instant.now().toEpochMilli();
-        ObservableList ls =  FXCollections.observableArrayList();
+//        mock chapters
+//        ObservableList ls =  FXCollections.observableArrayList();
+//
+//        for (int i = 0; i < 2; i++) {
+//            var a = new Chapter();
+//            a.name = "TestChapter " + i;
+//            ls.add(a);
+//        }
+//
+//        chapterList.prefHeightProperty().bind(Bindings.size(ls).multiply(35));
+//        chapterList.setItems(ls);
 
-        for (int i = 0; i < 2; i++) {
-            var a = new Chapter();
-            a.name = "TestChapter " + i;
-            ls.add(a);
-        }
         chapterList.setCellFactory(new Callback<ListView<Chapter>, ListCell<Chapter>>() {
             @Override
             public ListCell<Chapter> call(ListView<Chapter> param) {
                 return new ChapterListCell();
             }
         });
-
-        chapterList.prefHeightProperty().bind(Bindings.size(ls).multiply(35));
-        chapterList.setItems(ls);
 
 
         VBox.setMargin(chapterList, new Insets(5));
@@ -203,4 +213,31 @@ public class MangaInfoController implements Initializable, BaseController {
         pageSpinner.setManaged(false);
     }
 
+    public void showError(String title, String errorDesc) {
+        errorTitle.setText(title);
+        errorDescription.setText(errorDesc);
+        scrollPane.setVisible(false);
+        scrollPane.setManaged(false);
+        pageSpinner.setVisible(false);
+        pageSpinner.setManaged(false);
+        errorPane.setVisible(true);
+        errorPane.setManaged(true);
+    }
+
+    public void handleError(Throwable throwable, String source) {
+        throwable.printStackTrace();
+        String title = "UNKNOWN ERROR";
+        String desc = "";
+        if (throwable instanceof UnknownHostException) {
+            title = "NETWORK ERROR";
+            desc = ((UnknownHostException) throwable).getMessage();
+        }
+        if (throwable instanceof NullPointerException) {
+            title = "PARSER ERROR";
+            desc = throwable.getMessage();
+        }
+        if (source.equals("page"))
+            showError(title, desc);
+        // TODO: other sources
+    }
 }

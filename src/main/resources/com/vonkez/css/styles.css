@@ -67,6 +67,11 @@
   -fx-padding: 0;
 }
 
+.library-search-box {
+    -fx-background-color: fc-color;
+    -fx-text-fill: white;
+}
+
 
 /* third column (content pane)*/
 .content-pane {
@@ -157,7 +162,7 @@
 
 /* Chapter list*/
 .chapter-list {
-    -fx-background-color: red;
+    -fx-background-color: bg-color;
     -fx-background-insets: 0;
     -fx-border-insets: 0;
     -fx-padding: 0;
@@ -167,7 +172,7 @@
   -fx-padding: 0;
   -fx-background-insets: 0 0 0 0;
   -fx-border-insets: 0;
-  -fx-background-color: purple;
+  -fx-background-color: bg-selected-color;
 }
 
 .chapter-list .list-cell {
@@ -205,7 +210,42 @@
     -fx-background-color: bg-color;
     -fx-background-insets: 0 0 0 0;
     -fx-border-insets: 0;
-    -fx-padding: 50;
+    -fx-padding: 30 30 30 30;
+}
+
+.search-flowpane {
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: another-text-color;
+    -fx-background-color: bg-color;
+}
+.search-manga-label {
+    -fx-text-fill: white;
+    -fx-background-color: rgba(0, 0, 0, 0.75);
+    -fx-font-size: 18;
+    -fx-padding: 4;
+
+}
+
+
+.big-error-title {
+    -fx-text-fill: red;
+    -fx-font-size: 65;
+    -fx-font-weight: bold;
+}
+.big-error-desc {
+    -fx-text-fill: darkred;
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+}
+
+/* Back button */
+.back-button {
+    -fx-background-color: rgba(54, 57, 63, 0.7);
+    //-fx-background-radius: 65;
+    -fx-text-fill: red;
+}
+.back-button .ikonli-font-icon  {
+    -fx-icon-color: icon-color;
 }
 
 
